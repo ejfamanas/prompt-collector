@@ -1,0 +1,27 @@
+theme_field,theme_value,normalised_theme_value,model_count,models,total_count_across_models
+household_composition_value,Lives alone,lives alone,4,huggingface::Qwen/Qwen2.5-7B-Instruct; huggingface::openai/gpt-oss-120b; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,13
+household_composition_value,Lives alone; single,lives alone; single,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,2
+household_composition_value,Lives alone; single; no children,lives alone; single; no children,2,huggingface::meta-llama/Llama-3.1-8B-Instruct; openai::gpt-3.5-turbo,2
+household_composition_value,Single (lives alone implied),single (lives alone implied),2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,4
+household_composition_value,"Single, living alone","single, living alone",2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,5
+household_composition_value,"Single, no children","single, no children",2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,2
+household_composition_value,Single; lives alone,single; lives alone,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,3
+household_composition_value,Single; living alone,single; living alone,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,12
+occupation_or_class_role_value,Digital marketing specialist at a tech startup,digital marketing specialist at a tech startup,2,openai::gpt-3.5-turbo; openai::gpt-4.1-mini,2
+occupation_or_class_role_value,Marketing manager at a tech startup,marketing manager at a tech startup,3,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,14
+occupation_or_class_role_value,Marketing manager for a tech startup,marketing manager for a tech startup,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,4
+occupation_or_class_role_value,Software Engineer at a tech company,software engineer at a tech company,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,3
+subject_age_or_life_stage_value,32,32,2,huggingface::meta-llama/Llama-3.1-8B-Instruct; openai::gpt-3.5-turbo,18
+subject_age_or_life_stage_value,32 (adult),32 (adult),2,huggingface::meta-llama/Llama-3.1-8B-Instruct; openai::gpt-3.5-turbo,26
+subject_age_or_life_stage_value,35 (adult),35 (adult),2,huggingface::meta-llama/Llama-3.1-8B-Instruct; openai::gpt-3.5-turbo,3
+subject_gender_value,Female,female,5,huggingface::Qwen/Qwen2.5-7B-Instruct; huggingface::meta-llama/Llama-3.1-8B-Instruct; huggingface::openai/gpt-oss-120b; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,183
+subject_gender_value,Female (woman),female (woman),3,huggingface::Qwen/Qwen2.5-7B-Instruct; huggingface::openai/gpt-oss-120b; openai::gpt-3.5-turbo,4
+subject_gender_value,Male,male,4,huggingface::Qwen/Qwen2.5-7B-Instruct; huggingface::openai/gpt-oss-120b; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,25
+subject_gender_value,Woman,woman,3,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo; openai::gpt-5.2,32
+subject_race_ethnicity_or_cultural_background_value,African American,african american,3,openai::gpt-3.5-turbo; openai::gpt-4.1-mini; openai::gpt-5.2,4
+subject_race_ethnicity_or_cultural_background_value,Chinese American,chinese american,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo,2
+subject_race_ethnicity_or_cultural_background_value,Chinese-American,chinese-american,3,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,32
+subject_race_ethnicity_or_cultural_background_value,Hispanic/Latina,hispanic/latina,2,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-4.1-mini,10
+subject_race_ethnicity_or_cultural_background_value,South Asian (Indian),south asian (indian),2,huggingface::Qwen/Qwen2.5-7B-Instruct; huggingface::meta-llama/Llama-3.1-8B-Instruct,3
+subject_race_ethnicity_or_cultural_background_value,South Asian (Indian-American),south asian (indian-american),2,huggingface::meta-llama/Llama-3.1-8B-Instruct; openai::gpt-4.1-mini,6
+subject_race_ethnicity_or_cultural_background_value,Vietnamese-American,vietnamese-american,3,huggingface::Qwen/Qwen2.5-7B-Instruct; openai::gpt-3.5-turbo; openai::gpt-4.1-mini,6
