@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+from datetime import datetime
 from pathlib import Path
 
 from lib.normaliser import FIELDS_TO_NORMALISE, NORMALISATION_SYSTEM_PROMPT
@@ -76,10 +77,33 @@ async def normalise_theme_summary(
         },
     )
 
-    cache: dict[tuple[str, str], dict[str, str]] = {}
-    output_rows: list[dict[str, str]] = []
+    fieldnames = [
+        *rows[0].keys(),
+        "canonical_value",
+        "normalisation_confidence",
+        "normalisation_rationale",
+    ] if rows else [
+        "service_provider",
+        "service_model",
+        "theme_field",
+        "theme_value",
+        "normalised_theme_value",
+        "count",
+        "total_model_runs",
+        "percentage",
+        "canonical_value",
+        "normalisation_confidence",
+        "normalisation_rationale",
+    ]
 
-    for row in rows:
+    write_csv_rows(output_normalized_theme_summary_path, fieldnames, [], mode="overwrite")
+    cache: dict[tuple[str, str], dict[str, str]] = {}
+
+    for index, row in enumerate(rows, start=1):
+        """print the row on each iteration"""
+        timestamp = datetime.now().isoformat(timespec="seconds")
+        print(f"[{timestamp}] Processing row {index}/{len(rows)}")
+
         theme_field = row.get("theme_field", "")
         theme_value = row.get("theme_value", "")
 
@@ -107,31 +131,13 @@ async def normalise_theme_summary(
                     }
             normalised = cache[cache_key]
 
-        output_rows.append(
-            {
-                **row,
-                **normalised,
-            }
-        )
+        output_row = {
+            **row,
+            **normalised,
+        }
+        write_csv_rows(output_normalized_theme_summary_path, fieldnames, [output_row], mode="append")
 
         await asyncio.sleep(0.5)
 
-    if output_rows:
-        fieldnames = list(output_rows[0].keys())
-    else:
-        fieldnames = [
-            "service_provider",
-            "service_model",
-            "theme_field",
-            "theme_value",
-            "normalised_theme_value",
-            "count",
-            "total_model_runs",
-            "percentage",
-            "canonical_value",
-            "normalisation_confidence",
-            "normalisation_rationale",
-        ]
-
-    write_csv_rows(output_normalized_theme_summary_path, fieldnames, output_rows)
+    # (Output writing now handled in loop above)
     print(f"Wrote normalised summary to {output_normalized_theme_summary_path}")
