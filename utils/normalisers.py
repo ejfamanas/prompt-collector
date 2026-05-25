@@ -11,6 +11,8 @@ from utils.json_utils import parse_json_object
 from lib.configs import LLMConfig
 from services.openai_service import OpenAIResponsesService
 
+from dotenv import load_dotenv
+
 
 def build_normalisation_prompt(theme_field: str, theme_value: str) -> str:
     """Build the LLM prompt for one theme value."""

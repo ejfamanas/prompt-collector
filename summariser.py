@@ -11,7 +11,6 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 from utils.normalisers import normalise_theme_summary
-from dotenv import load_dotenv
 
 
 INPUT_MODEL_THEME_SUMMARY_PATH = Path("data/model_theme_summary.csv")
