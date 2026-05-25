@@ -10,15 +10,15 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from utils.normalisers import normalise_theme_summary
+from utils.normalisers import normalise_shared_theme_summary
 
 
-INPUT_MODEL_THEME_SUMMARY_PATH = Path("data/model_theme_summary.csv")
-OUTPUT_NORMALISED_THEME_SUMMARY_PATH = Path("data/normalised_model_theme_summary.csv")
+INPUT_MODEL_THEME_SUMMARY_PATH = Path("data/shared_theme_summary.csv")
+OUTPUT_NORMALISED_THEME_SUMMARY_PATH = Path("data/normalised_shared_theme_summary.csv")
 
 
 if __name__ == "__main__":
     asyncio.run(
-        normalise_theme_summary(
+        normalise_shared_theme_summary(
             INPUT_MODEL_THEME_SUMMARY_PATH,OUTPUT_NORMALISED_THEME_SUMMARY_PATH
         ))

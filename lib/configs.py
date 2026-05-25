@@ -3,7 +3,6 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
 
 
-
 @dataclass(frozen=True)
 class LLMConfig:
     """Generic model configuration object.
