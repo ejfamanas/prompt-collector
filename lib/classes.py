@@ -1,6 +1,18 @@
 import asyncio
+
+from collections.abc import Callable
+from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from lib.configs import LLMConfig
+
+
+@dataclass(frozen=True)
+class ProviderSpec:
+    """Runtime specification for one retrieval or analysis provider."""
+
+    name: str
+    service_factory: Callable[[], LLMService]
+    config: LLMConfig
 
 
 class LLMService(ABC):

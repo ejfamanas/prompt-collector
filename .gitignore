@@ -1,7 +1,8 @@
 .env
 .venv/
 data/
+dtu_data/
 .idea/
 
-/data/
+/dtu_data/
 /.idea/

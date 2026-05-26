@@ -16,46 +16,33 @@ def normalise_csv_row(columns: Iterable[str], row: Dict[str, Any]) -> Dict[str, 
     """Return a row containing only the configured CSV columns."""
     return {column: row.get(column, "") for column in columns}
 
-
 def append_csv_row(path: Path, columns: Iterable[str], row: Dict[str, Any]) -> None:
     """Append a single row to a CSV file."""
-    ensure_csv(path, columns)
     columns_list = list(columns)
+    ensure_csv(path, columns_list)
     safe_row = normalise_csv_row(columns_list, row)
+
     with path.open("a", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=columns_list)
         writer.writerow(safe_row)
 
-
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
-    """Read CSV rows from disk."""
+    """Read CSV rows if the file exists; otherwise return an empty list."""
     if not path.exists():
-        raise FileNotFoundError(f"Input CSV not found: {path}")
+        return []
 
     with path.open("r", encoding="utf-8", newline="") as csv_file:
         return list(csv.DictReader(csv_file))
 
+def write_csv_rows(path: Path, columns: Iterable[str], rows: Iterable[Dict[str, Any]]) -> None:
+    """Write rows to a CSV file, including headers.
 
-def write_csv_rows(
-    path: Path,
-    columns: Iterable[str],
-    rows: list[dict[str, Any]],
-    *,
-    mode: str = "overwrite",
-) -> None:
-    """Write one or more rows to a CSV file.
-
-    mode="overwrite" replaces the file contents.
-    mode="append" appends rows while preserving existing headers.
+    Rows are normalised through `normalise_csv_row` so extra keys are ignored
+    and missing keys are written as empty strings.
     """
     columns_list = list(columns)
-
-    if mode == "append":
-        for row in rows:
-            append_csv_row(path, columns_list, row)
-        return
-
     path.parent.mkdir(parents=True, exist_ok=True)
+
     with path.open("w", encoding="utf-8", newline="") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=columns_list)
         writer.writeheader()

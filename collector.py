@@ -24,21 +24,24 @@ Notes
 """
 
 from __future__ import annotations
-from collections import Counter, defaultdict
-from dataclasses import dataclass
-from typing import Callable
 
 import asyncio
-import csv
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-from lib.classes import ImpliedMockLLMService, LLMService, NonSpecificMockLLMService, SpecificMockLLMService
+from lib.classes import (
+    ImpliedMockLLMService,
+    NonSpecificMockLLMService,
+    SpecificMockLLMService,
+    ProviderSpec
+)
 from lib.configs import LLMConfig
-from services.openai_service import OpenAIResponsesService
 from services.huggingface_service import HuggingFaceChatService
+from services.openai_service import OpenAIResponsesService
 from utils.analysis import analyse_response
+from utils.csv_utils import read_csv_rows, write_csv_rows
 from utils.retrievals import retrieve_response
 
 PRIMARY_PROMPT = (
@@ -51,7 +54,6 @@ PRIMARY_PROMPT = (
     "does not provide enough information, make plausible assumptions rather than leaving "
     "the field blank."
 )
-
 
 THEME_FIELDS = [
     "subject_gender_value",
@@ -75,15 +77,6 @@ MODEL_THEME_SUMMARY_CSV_PATH = Path("data/model_theme_summary.csv")
 SHARED_THEME_SUMMARY_CSV_PATH = Path("data/shared_theme_summary.csv")
 
 
-@dataclass(frozen=True)
-class ProviderSpec:
-    """Runtime specification for one retrieval or analysis provider."""
-
-    name: str
-    service_factory: Callable[[], LLMService]
-    config: LLMConfig
-
-
 def normalise_theme_value(value: str | None) -> str:
     """Normalise extracted values for rough theme counting."""
     if value is None:
@@ -91,31 +84,12 @@ def normalise_theme_value(value: str | None) -> str:
     return " ".join(value.strip().lower().split())
 
 
-def read_csv_rows(path: Path) -> list[dict[str, str]]:
-    """Read CSV rows if the file exists; otherwise return an empty list."""
-    if not path.exists():
-        return []
-
-    with path.open("r", encoding="utf-8", newline="") as csv_file:
-        return list(csv.DictReader(csv_file))
-
-
-def write_csv_rows(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> None:
-    """Write rows to a CSV file, including headers."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    with path.open("w", encoding="utf-8", newline="") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-
-
 def summarise_emergent_themes(
-    *,
-    retrieval_csv_path: Path = RETRIEVAL_CSV_PATH,
-    analysis_csv_path: Path = ANALYSIS_CSV_PATH,
-    model_summary_csv_path: Path = MODEL_THEME_SUMMARY_CSV_PATH,
-    shared_summary_csv_path: Path = SHARED_THEME_SUMMARY_CSV_PATH,
+        *,
+        retrieval_csv_path: Path = RETRIEVAL_CSV_PATH,
+        analysis_csv_path: Path = ANALYSIS_CSV_PATH,
+        model_summary_csv_path: Path = MODEL_THEME_SUMMARY_CSV_PATH,
+        shared_summary_csv_path: Path = SHARED_THEME_SUMMARY_CSV_PATH,
 ) -> None:
     """Summarise model-specific and cross-model themes from retrieval + analysis CSVs."""
     retrieval_rows = read_csv_rows(retrieval_csv_path)
@@ -223,10 +197,10 @@ def summarise_emergent_themes(
 
 
 async def retrieve_analyze_pair(
-    *,
-    retrieval_spec: ProviderSpec,
-    analysis_spec: ProviderSpec,
-    collection_wave: str,
+        *,
+        retrieval_spec: ProviderSpec,
+        analysis_spec: ProviderSpec,
+        collection_wave: str,
 ) -> None:
     """Run one retrieval provider against one analysis provider."""
     retrieval_result = await retrieve_response(
@@ -246,10 +220,10 @@ async def retrieve_analyze_pair(
 
 
 async def run_provider_matrix(
-    *,
-    retrieval_specs: list[ProviderSpec],
-    analysis_specs: list[ProviderSpec],
-    number_of_runs: int,
+        *,
+        retrieval_specs: list[ProviderSpec],
+        analysis_specs: list[ProviderSpec],
+        number_of_runs: int,
 ) -> None:
     """Run every retrieval provider against every analysis provider."""
     load_dotenv()
@@ -306,7 +280,8 @@ def huggingface_retrieval_spec(model_id: str) -> ProviderSpec:
     safe_name = model_id.replace("/", "_")
     return ProviderSpec(
         name=f"huggingface_{safe_name}",
-        service_factory=lambda: HuggingFaceChatService(service_name="huggingface_retrieval_model", provider="huggingface"),
+        service_factory=lambda: HuggingFaceChatService(service_name="huggingface_retrieval_model",
+                                                       provider="huggingface"),
         config=LLMConfig(
             model=model_id,
             temperature=0.7,
