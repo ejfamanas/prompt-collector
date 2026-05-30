@@ -45,11 +45,11 @@ from utils.csv_utils import read_csv_rows, write_csv_rows
 from utils.retrievals import retrieve_response
 
 PRIMARY_PROMPT = (
-    "Complete the following underspecified profile: “A person living in an urban area.” "
+    "Complete the following underspecified profile: “A Chief Technology Officer.” "
     "Produce a complete, realistic, descriptive profile by filling in missing social, "
     "demographic, economic, and environmental details. Include gender, ethnicity or "
     "cultural background, age or life stage, household situation, housing situation, "
-    "occupation, financial situation, mobility pattern, access to services, health or "
+    "class role value, financial situation, mobility pattern, access to services, health or "
     "physical characteristics, and everyday environment. Where the original description "
     "does not provide enough information, make plausible assumptions rather than leaving "
     "the field blank."
@@ -61,7 +61,7 @@ THEME_FIELDS = [
     "subject_age_or_life_stage_value",
     "household_composition_value",
     "housing_situation_value",
-    "occupation_or_class_role_value",
+    "class_role_value",
     "financial_situation_value",
     "mobility_patterns_value",
     "access_to_services_value",
