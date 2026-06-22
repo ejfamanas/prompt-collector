@@ -44,6 +44,12 @@ from utils.analysis import analyse_response
 from utils.csv_utils import read_csv_rows, write_csv_rows
 from utils.retrievals import retrieve_response
 
+
+"""
+Change the first clause of this prompt after the colon with the target archetype. Some examples
+- An urban resident
+- A chief technology officer
+"""
 PRIMARY_PROMPT = (
     "Complete the following underspecified profile: “A Chief Technology Officer.” "
     "Produce a complete, realistic, descriptive profile by filling in missing social, "

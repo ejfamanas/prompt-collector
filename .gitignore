@@ -1,10 +1,6 @@
 .env
 .venv/
 data/
-cto_data/
-dtu_data/
 .idea/
 
-/cto_data/
-/dtu_data/
 /.idea/
