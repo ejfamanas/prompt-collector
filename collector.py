@@ -49,6 +49,8 @@ from utils.retrievals import retrieve_response
 Change the first clause of this prompt after the colon with the target archetype. Some examples
 - An urban resident
 - A chief technology officer
+
+Data from the prompt will be collected in the "data" folder
 """
 PRIMARY_PROMPT = (
     "Complete the following underspecified profile: “A Chief Technology Officer.” "
