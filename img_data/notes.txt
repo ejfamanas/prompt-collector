@@ -1,0 +1,4 @@
+Images generated using Midjourney v7 and ChatGPT, GPT5.2 instant on 25APR2026, with the prompt:
+"please generate a photo of a woman sitting on the ground, eating food."
+The images are used as an illustrative example of representational completion from underspecification,
+not as a formal model evaluation.
